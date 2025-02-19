@@ -1,0 +1,76 @@
+Exam in Python SQL
+
+Part A – Choose the correct answer (50 points):
+
+Answers: 
+
+1. Option 1.
+2. Option 1.
+3. Option 3.
+4. Option 2.
+5. Option 1.
+6. Option 2.
+7. Option 4.
+8. Option 1.
+9. Option 4.
+10. Option 1.    
+
+Part B – Writing SQL Queries (40 points):
+
+1. Creating and populating a database:
+A store wants to computerize the sale of televisions. Create a database containing the
+following information:
+• id – A unique identifier for each television (auto-incremented, for store purposes)
+• catalog_number – Global catalog number
+• brand – Brand name: Samsung, LG, Sony
+• model – Television model
+• screen_size – Screen size in inches
+• resolution – Screen resolution: 4K, 8K, Full HD
+• price – Television price
+• stock_quantity – Stock quantity
+• release_year – Market release year
+• smart_tv – Whether the television is smart (Yes/No)
+• os – Operating system (only applicable for smart TVs, otherwise NULL)
+• panel_type – Panel type: OLED, QLED, LED
+
+Write an SQL query to create a table with all the above information. Choose appropriate field
+types. Use DEFAULT, CHECK, UNIQUE, etc., where applicable. (You may split into multiple
+tables if needed)
+
+
+----> SQL_Statement: 
+
+CREATE TABLE tv_inventory (
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+catalog_number INT NOT NULL UNIQUE,
+brand TEXT NOT NULL,
+model INT NOT NULL,
+screen_size INTEGER CHECK(screen_size > 0),
+screen_resolution TEXT CHECK(screen_resolution IN ('4K', '8K', 'Full HD')),
+price INT NOT NULL,
+stock_quantity INT DEFAULT 0,
+release_year INTEGER,
+smart_tv TEXT CHECK(smart_tv IN ('Yes', 'No')) NOT NULL,
+operating_system TEXT CHECK((smart_tv = 'Yes' AND operating_system IS NOT NULL) OR (smart_tv = 'No' AND operating_system IS NULL)),
+panel_type TEXT CHECK(panel_type IN ('LED', 'QLED', 'LCD'))
+);
+
+
+2. Write 3 INSERT queries to add televisions to the table.
+   
+
+----> SQL_Statement: 
+
+
+INSERT INTO tv_inventory(catalog_number, brand, model, screen_size, screen_resolution, price, stock_quantity, release_year, smart_tv, operating_system, panel_type)
+VALUES(10236, 'Samsung', 7345, 43, 'Full HD', 1399, 25, 2023, 'Yes', 'Tizen', 'LED'),
+	  (10478, 'LG', 9890006, 98, '4K', 14858, 75, 2025, 'Yes', 'webOS 24', 'QLED'),
+	  (10635, 'Xiaomi', 754236, 85, '8K', 7249, 12, 2024, 'No', NULL, 'QLED');
+
+
+----> OUTPUT: 
+
+id    catalog_number	 brand	 model screen_size  screen_resolution price	stock_quantity	release_year smart_tv operating_system panel_type	
+1	10236		Samsung	 7345	  43	   	Full HD	      1399		25	2023		Yes	   Tizen	LED
+2	10478		LG	9890006	  98	      	   4K	      14858		75	2025		Yes	  webOS 24	QLED
+3	10635		Xiaomi	754236	  85	      	   8K	      7249		12	2024		No	  Empty(NULL)	QLED
